@@ -4,11 +4,101 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="{% static 'images/logo.png' %}">
   <title>ADNU EXCHANGE-HUB</title>
   <link rel="stylesheet" href="{% static 'css/sell.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    .wishlist-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #0056B0;
+      color: #0056B0;
+      font-weight: bold;
+    }
+
+    .wishlist-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .wishlist-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .wishlist-item button {
+      background: #0056B0;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: small;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .wishlist-item button:hover {
+      background-color: #004080;
+    }
+
+    .wishlist-item button:active {
+      transform: scale(0.95);
+    }
+
+    .wishlist-item .remove {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: small;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .wishlist-item .remove:hover {
+      background-color: #cc0000;
+    }
+
+    .wishlist-item .remove:active {
+      transform: scale(0.95);
+    }
+
+    .add-item {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .add-item input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex-grow: 1;
+    }
+
+    .add-item button {
+      background: #0056B0;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,13 +111,13 @@
     <aside class="sidebar">
       <nav class="menu">
         <div class="nav-group">
-          <a href="{% url 'home' %}" class="active"><i class="fas fa-tags"></i> Buy</a>
+          <a href="{% url 'home' %}"><i class="fas fa-tags"></i> Buy</a>
           <div class="divider"></div>
           <a href="{% url 'sell' %}"><i class="fas fa-box-open"></i> Sell</a>
           <div class="divider"></div>
           <a href="{% url 'contacts' %}"><i class="fas fa-address-book"></i> Contacts</a>
           <div class="divider"></div>
-          <a href="{% url 'wishlist' %}"><i class="fas fa-heart"></i> Wishlist</a>
+          <a href="{% url 'wishlist' %}" class="active"><i class="fas fa-heart"></i> Wishlist</a>
           <div class="divider"></div>
           <a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i> Cart</a>
           <div class="divider"></div>
@@ -42,9 +132,32 @@
     </aside>
 
     <div class="main-content">
-   
+      <h2>Your Wishlist</h2>
+
+      <div class="wishlist-header">
+        <div>Item</div>
+        <div>Price</div>
+        <div>Move to Cart</div>
+        <div>Remove</div>
       </div>
-    
+
+      <!-- Sample Item -->
+      <div class="wishlist-item">
+        <div>
+          <img src="{% static 'images/sample-item.jpg' %}" alt="Item Image"> Sample Product Name
+        </div>
+        <div>₱599</div>
+        <div><button>Add to Cart</button></div>
+        <div><button class="remove">Remove</button></div>
+      </div>
+
+      <div class="add-item">
+        <input type="text" placeholder="Enter item name..." />
+        <button>Add to Wishlist</button>
+      </div>
+    </div>
+  </div>
+
   <script src="{% static 'js/sell.js' %}"></script>
 </body>
 </html>
