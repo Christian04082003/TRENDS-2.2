@@ -4,11 +4,151 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="{% static 'images/logo.png' %}">
   <title>ADNU EXCHANGE-HUB</title>
-  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+  <link rel="stylesheet" href="{% static 'css/sell.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Merriweather&display=swap" rel="stylesheet" />
+  <style>
+    .cart-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #0056B0;
+      color: #0056B0;
+      font-weight: bold;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .cart-item button {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: small;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .cart-item button:hover {
+      background-color: #cc0000;
+    }
+
+    .cart-item button:active {
+      transform: scale(0.95);
+    }
+
+    .cart-item .move {
+      background: #0056B0;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: small;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .cart-item .move:hover {
+      background-color: #004080;
+    }
+
+    .cart-item .move:active {
+      transform: scale(0.95);
+    }
+
+    .cart-item .item-details {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-item .item-quantity {
+      display: flex;
+      align-items: center;
+    }
+
+    .quantity-input {
+      width: 60px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .cart-summary {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .cart-summary h2 {
+      color: #0056B0;
+      font-family: 'Merriweather', serif;
+    }
+
+    .cart-summary p {
+      margin: 5px 0;
+      color: #333;
+    }
+
+    .checkout-button {
+      background: #0056B0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .checkout-button:hover {
+      background-color: #004080;
+    }
+
+    .checkout-button:active {
+      transform: scale(0.95);
+    }
+
+    .empty-cart {
+      padding: 20px;
+      text-align: center;
+      color: #0056B0;
+      font-size: 1.2rem;
+      display: none;
+    }
+
+    .empty-cart a {
+      color: #0056B0;
+      text-decoration: none;
+    }
+
+    .empty-cart a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,7 +161,7 @@
     <aside class="sidebar">
       <nav class="menu">
         <div class="nav-group">
-          <a href="{% url 'home' %}" class="active"><i class="fas fa-tags"></i> Buy</a>
+          <a href="{% url 'home' %}"><i class="fas fa-tags"></i> Buy</a>
           <div class="divider"></div>
           <a href="{% url 'sell' %}"><i class="fas fa-box-open"></i> Sell</a>
           <div class="divider"></div>
@@ -29,7 +169,7 @@
           <div class="divider"></div>
           <a href="{% url 'wishlist' %}"><i class="fas fa-heart"></i> Wishlist</a>
           <div class="divider"></div>
-          <a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i> Cart</a>
+          <a href="{% url 'cart' %}" class="active"><i class="fas fa-shopping-cart"></i> Cart</a>
           <div class="divider"></div>
           <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
           <div class="divider"></div>
@@ -42,9 +182,51 @@
     </aside>
 
     <div class="main-content">
-    
-  </div>
+      <h2>Your Cart</h2>
+      <div class="cart">
+        <div class="cart-header">
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
+          <div>Action</div>
+        </div>
+        <div id="cart-items">
+          <div class="cart-item">
+            <div class="item-details">
+              <img src="{% static 'images/sample-item.jpg' %}" alt="Sample Item 1">
+              Sample Item 1
+            </div>
+            <div>₱20.00</div>
+            <div>1</div>
+            <div>₱20.00</div>
+            <div><button class="remove" onclick="alert('Item removed (simulated)')">Remove</button></div>
+          </div>
+          <div class="cart-item">
+            <div class="item-details">
+              <img src="{% static 'images/sample-item.jpg' %}" alt="Another Item">
+              Another Item
+            </div>
+            <div>₱35.50</div>
+            <div>2</div>
+            <div>₱71.00</div>
+            <div><button class="remove" onclick="alert('Item removed (simulated)')">Remove</button></div>
+          </div>
+        </div>
+      </div>
 
-  <script src="{% static 'js/cart.js' %}"></script>
+      <div id="empty-cart" class="empty-cart">
+        Your cart is empty. <a href="{% url 'home' %}">Start shopping now!</a>
+      </div>
+
+      <div class="cart-summary">
+        <h2>Order Summary</h2>
+        <p>Subtotal: ₱91.00</p>
+        <p>Shipping: Calculated at Checkout</p>
+        <p>Total: ₱91.00</p>
+        <button class="checkout-button" onclick="alert('Proceed to checkout (simulated)')">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
