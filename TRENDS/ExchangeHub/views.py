@@ -1,14 +1,18 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def home(request):
+    # Your view logic here
+    return render(request, 'home.html')
+
 
 def ExchangeHub(request):
   return render(request, "login.html")
 
 def loading(request):
     return render(request, "loading.html")
-
-def home(request):
-  return render(request, "home.html")
-
 
 def cart(request):
   return render(request, "cart.html")
