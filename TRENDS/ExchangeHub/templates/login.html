@@ -41,7 +41,7 @@
 
       <button class="gbox-btn">
         <img src="{% static 'images/google.png' %}" class="google">
-        <a href="#">Sign in with ADNU GBOX</a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next={% url 'loading' %}">Login with Google</a>
       </button>
 
     </div>
