@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import render
 
 urlpatterns = [
   
@@ -16,7 +17,8 @@ urlpatterns = [
     path('contacts/', views.contacts, name="contacts"),
     path('sell/', views.sell, name="sell"),
     path('settings/', views.settings, name="settings"),
-    path('moreinfo/', views.moreinfo, name="moreinfo")
-]
+    path('moreinfo/', views.moreinfo, name="moreinfo"),
+    path('', views.home, name='home'),
 
+]   
 
